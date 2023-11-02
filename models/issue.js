@@ -9,27 +9,36 @@ const issueSchema = new Schema({
   },
   description: {
     type: String,
-    required: true
-  },
-  comment: {
-    type: String
   },
   // tracks up/down votes
-upVotes: {
-    type: Number,
-    default: 0
+upvoters: [{
+  type: Schema.Types.ObjectId,
+  ref: 'User'
+}],
+downvoters: [{
+  type: Schema.Types.ObjectId,
+  ref: 'User'
+}],
+issueVotes: {
+  type: Number,
+  default: 0
 },
-downVotes: {
-    type: Number,
-    default: 0
+postDate: {
+  type: Date,
+  default: Date.now()
 },
- 
-  
   user: {
     type: Schema.Types.ObjectId, 
     ref:"User",
     required: true
-  }
-})
+  },
+  comment: [{
+    // type: [String],
+    // type: Array,
+    required: false,
+    type: Schema.Types.ObjectId,
+    ref: 'Comment'
+  }]
+});
 
-module.exports = mongoose.model("Issue", issueSchema)
+module.exports = mongoose.model("Issue", issueSchema);
